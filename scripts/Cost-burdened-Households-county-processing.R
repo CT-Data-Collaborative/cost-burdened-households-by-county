@@ -23,14 +23,14 @@ path_to_raw <- (paste0(getwd(), "/", raw_location))
 options(scipen=999)
 acsdata <- getACSData(
     getCTGeos("town"),
-    yearList = 2010:2018,
+    yearList = 2010:2019,
     table = "DP04"
 )
 
 cost_burdened <- data.table()
 for (data in acsdata) {
     year <- data@endyear
-   if (year %in% c(2015, 2016, 2017, 2018)) {
+   if (year %in% c(2015, 2016, 2017, 2018, 2019)) {
       cost_home_total_num <- acsSum(data, 219, "Homeowner Total Num") #VC159
       cost_owner_num_30 <- acsSum(data, 227, "Homeowner 30 Num") #VC163
       cost_owner_pct_30 <- acsSum(data, 228, "Homeowner 30 Pct") #VC163
@@ -102,7 +102,7 @@ for (data in acsdata) {
     names(estimates)[names(estimates) == "HC03_VC201.Percent; GROSS RENT AS A PERCENTAGE OF HOUSEHOLD INCOME (GRAPI) - Occupied units paying rent (excluding units where GRAPI cannot be computed) - 30.0 to 34.9 percent"] <- "Total Renters 30 Pct"
     names(estimates)[names(estimates) == "HC03_VC202.Percent; GROSS RENT AS A PERCENTAGE OF HOUSEHOLD INCOME (GRAPI) - Occupied units paying rent (excluding units where GRAPI cannot be computed) - 35.0 percent or more"] <- "Total Renters 35 Pct"
 
-    # ACS 2018
+    # ACS 2018 (and 2019)
     names(estimates)[names(estimates) == "DP04_0110E.Estimate!!SELECTED MONTHLY OWNER COSTS AS A PERCENTAGE OF HOUSEHOLD INCOME (SMOCAPI)!!Housing units with a mortgage (excluding units where SMOCAPI cannot be computed)"] <- "Total Homeowners Num"
     names(estimates)[names(estimates) == "DP04_0114E.Estimate!!SELECTED MONTHLY OWNER COSTS AS A PERCENTAGE OF HOUSEHOLD INCOME (SMOCAPI)!!Housing units with a mortgage (excluding units where SMOCAPI cannot be computed)!!30.0 to 34.9 percent"] <- "Total Homeowners 30 Num"
     names(estimates)[names(estimates) == "DP04_0114PE.Percent Estimate!!SELECTED MONTHLY OWNER COSTS AS A PERCENTAGE OF HOUSEHOLD INCOME (SMOCAPI)!!Housing units with a mortgage (excluding units where SMOCAPI cannot be computed)!!30.0 to 34.9 percent"] <- "Total Homeowners 30 Pct"
@@ -173,7 +173,7 @@ for (data in acsdata) {
     names(moes)[names(moes) == "HC03_VC201.Percent; GROSS RENT AS A PERCENTAGE OF HOUSEHOLD INCOME (GRAPI) - Occupied units paying rent (excluding units where GRAPI cannot be computed) - 30.0 to 34.9 percent"] <- "Total Renters 30 Pct"
     names(moes)[names(moes) == "HC03_VC202.Percent; GROSS RENT AS A PERCENTAGE OF HOUSEHOLD INCOME (GRAPI) - Occupied units paying rent (excluding units where GRAPI cannot be computed) - 35.0 percent or more"] <- "Total Renters 35 Pct"
 
-    # ACS 2018
+    # ACS 2018 (and 2019)
     names(moes)[names(moes) == "DP04_0110E.Estimate!!SELECTED MONTHLY OWNER COSTS AS A PERCENTAGE OF HOUSEHOLD INCOME (SMOCAPI)!!Housing units with a mortgage (excluding units where SMOCAPI cannot be computed)"] <- "Total Homeowners Num"
     names(moes)[names(moes) == "DP04_0114E.Estimate!!SELECTED MONTHLY OWNER COSTS AS A PERCENTAGE OF HOUSEHOLD INCOME (SMOCAPI)!!Housing units with a mortgage (excluding units where SMOCAPI cannot be computed)!!30.0 to 34.9 percent"] <- "Total Homeowners 30 Num"
     names(moes)[names(moes) == "DP04_0114PE.Percent Estimate!!SELECTED MONTHLY OWNER COSTS AS A PERCENTAGE OF HOUSEHOLD INCOME (SMOCAPI)!!Housing units with a mortgage (excluding units where SMOCAPI cannot be computed)!!30.0 to 34.9 percent"] <- "Total Homeowners 30 Pct"
@@ -288,7 +288,7 @@ cost_burdened_complete$Value <-  round(cost_burdened_complete$Value, 2)
 
 write.table(
     cost_burdened_complete,
-    file.path("data", "cost-burdened-households-county-2018.csv"),
+    file.path("data", "cost-burdened-households-county-2019.csv"),
     sep = ",",
     row.names = F,
     col.names = T,
